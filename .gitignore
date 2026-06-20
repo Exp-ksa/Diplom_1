@@ -1,0 +1,5 @@
+# игнорировать файл _pycache_ в директории
+__pycache__
+.pytest_cache
+.coverage
+.venv
