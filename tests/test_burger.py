@@ -16,6 +16,11 @@ class TestBurger:
         with pytest.raises(AttributeError):
             burger.get_price()
 
+    def test_set_buns_none_causes_error_on_get_price(self):
+        burger = Burger()
+        burger.set_buns(None)
+        with pytest.raises(AttributeError):
+            burger.get_price()
 
     @pytest.mark.parametrize('name, price',[
                              data.black_bun,
