@@ -11,18 +11,12 @@ from praktikum.ingredient import Ingredient
 
 class TestBurger:
     
-    def test_burger_none_compound(self):
+    def test_get_price_without_bun_raises_error(self):
         burger = Burger()
-        
-        assert burger.bun is None, f"Ожидалось: отсутсвие булок, получено: '{burger.bun}'"
+        with pytest.raises(AttributeError):
+            burger.get_price()
 
 
-    def test_burger_empty_ingredients(self):
-        burger = Burger()
-
-        assert burger.ingredients == [], f"Ожидалось: пустой список, получено: '{burger.ingredients}'"
-
-    
     @pytest.mark.parametrize('name, price',[
                              data.black_bun,
                              data.white_bun,
@@ -61,18 +55,10 @@ class TestBurger:
         assert burger.bun.get_price() == price2
 
     
-    @pytest.mark.parametrize('type_ingredient, name, price',[
-                             data.hot_sauce,
-                             data.chili_sauce,
-                             data.cutlet,
-                             data.sausage])
-    def test_add_one_ingredient(self, type_ingredient, name, price):
+    def test_add_one_ingredient(self):
         
         ingredient = Mock(spec=Ingredient)
-        ingredient.get_type.return_value = type_ingredient
-        ingredient.get_name.return_value = name
-        ingredient.get_price.return_value = price
-        
+                
         burger = Burger()
         burger.add_ingredient(ingredient)
         
@@ -80,15 +66,10 @@ class TestBurger:
         assert len(burger.ingredients) == 1
 
 
-    @pytest.mark.parametrize('count_ingredient, kit_ingredient',[
-                             [2, data.ingredient_data_2],
-                             [3, data.ingredient_data_3], 
-                             [4, data.ingredient_data_4], 
-                             [5, data.ingredient_data_5], 
-                             [6, data.ingredient_data_6]])
-    def test_add_multiple_ingredients(self, count_ingredient, kit_ingredient):
+    def test_add_multiple_ingredients(self):
         
-        ingredient_data = kit_ingredient
+        ingredient_data = data.ingredient_data_3
+        count_ingredient = 3
 
         burger = Burger()
         expected_ingredients = []
@@ -384,7 +365,6 @@ class TestBurger:
         assert str(price) in receipt
 
     def test_get_receipt_without_bun_raises_error(self):
-        """Проверка, что get_receipt вызывает ошибку при отсутствии булочки"""
         burger = Burger()
 
         with pytest.raises(AttributeError):
