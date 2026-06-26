@@ -71,7 +71,7 @@ class TestBurger:
         assert len(burger.ingredients) == 1
 
 
-    def test_add_multiple_ingredients(self):
+    def test_add_three_ingredients(self):
         
         ingredient_data = data.ingredient_data_3
         count_ingredient = 3
